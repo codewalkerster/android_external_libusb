@@ -7,7 +7,7 @@ LOCAL_SRC_FILES := linux.c \
 	usb.c \
 	descriptors.c 
 
-LOCAL_MODULE_TAGS := eng
+LOCAL_MODULE_TAGS := optional
 
 LOCAL_C_INCLUDES += ./
 

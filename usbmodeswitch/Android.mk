@@ -21,6 +21,8 @@ LOCAL_SRC_FILES:=  \
 
 LOCAL_MODULE:= usb_modeswitch
 
+LOCAL_MODULE_TAGS := optional
+
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../libusb-0.1.12/
 
 LOCAL_CFLAGS := 
