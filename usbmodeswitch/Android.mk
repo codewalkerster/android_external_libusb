@@ -200,7 +200,9 @@ copy_from :=                  \
     8888_6500                 \
     12d1_14d1                 \
     12d1_1505                 \
-    230d_000d
+    230d_000d                 \
+    19d2_0120                 \
+    04cc_225a
 
 #copy_from = $(wildcard usb_modeswitch.d/*)
 
