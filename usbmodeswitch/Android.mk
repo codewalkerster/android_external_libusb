@@ -206,10 +206,11 @@ copy_from :=                  \
 
 #copy_from = $(wildcard usb_modeswitch.d/*)
 
-copy_to := $(addprefix $(TARGET_OUT)/etc/usb_modeswitch.d/,$(copy_from))
-copy_from := $(addprefix $(LOCAL_PATH)/usb_modeswitch.d/,$(copy_from))
-$(copy_to) : $(TARGET_OUT)/etc/usb_modeswitch.d/% : $(LOCAL_PATH)/usb_modeswitch.d/% | $(ACP)
-	   $(transform-prebuilt-to-target)
+#copy_to := $(addprefix $(TARGET_OUT)/etc/usb_modeswitch.d/,$(copy_from))
+#copy_from := $(addprefix $(LOCAL_PATH)/usb_modeswitch.d/,$(copy_from))
+#$(copy_to) : $(TARGET_OUT)/etc/usb_modeswitch.d/% : $(LOCAL_PATH)/usb_modeswitch.d/% | $(ACP)
+#	   $(transform-prebuilt-to-target)
 
-ALL_PREBUILT += $(copy_to)
+#ALL_PREBUILT += $(copy_to)
+
 
