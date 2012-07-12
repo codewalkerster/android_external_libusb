@@ -400,7 +400,7 @@ int usb_os_find_devices(struct usb_bus *bus, struct usb_device **devices)
     dev->filename[sizeof(dev->filename) - 1] = 0;
 
     snprintf(filename, sizeof(filename) - 1, "%s/%s", dirpath, entry->d_name);
-    fd = open(filename, O_RDWR);
+    fd = open(filename, O_RDWR | O_NONBLOCK);
     if (fd < 0) {
       fd = open(filename, O_RDONLY);
       if (fd < 0) {
