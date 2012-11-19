@@ -83,7 +83,7 @@ int targetDeviceCount=0;
 int devnum=-1, busnum=-1;
 int ret;
 
-char DetachStorageOnly=0, HuaweiMode=0, SierraMode=0, SonyMode=0, GCTMode=0, KobilMode=0;
+char DetachStorageOnly=0, HuaweiMode=0, SierraMode=0, SonyMode=0, GCTMode=0, KobilMode=0,EvdoMode=0;
 char verbose=0, show_progress=1, ResetUSB=0, CheckSuccess=0, config_read=0;
 char NeedResponse=0, NoDriverLoading=0, InquireDevice=1, sysmode=0;
 
@@ -151,6 +151,7 @@ void readConfigFile(const char *configFilename)
 	ParseParamBool(configFilename, GCTMode);
 	ParseParamBool(configFilename, KobilMode);
 	ParseParamBool(configFilename, NoDriverLoading);
+	ParseParamBool(configFilename, EvdoMode);
 	ParseParamHex(configFilename, MessageEndpoint);
 	ParseParamString(configFilename, MessageContent);
 	ParseParamString(configFilename, MessageContent2);
@@ -664,7 +665,8 @@ int deviceInquire ()
 		SHOW_PROGRESS(" Could not claim interface (error %d). Skipping device inquiry\n", ret);
 		goto out;
 	}
-	usb_clear_halt(devh, MessageEndpoint);
+	if(!EvdoMode)
+		usb_clear_halt(devh, MessageEndpoint);
 
 	ret = usb_bulk_write(devh, MessageEndpoint, (char *)command, 31, 0);
 	if (ret < 0) {
@@ -698,7 +700,8 @@ int deviceInquire ()
 
 out:
 	if (strlen(MessageContent) == 0)
-		usb_clear_halt(devh, MessageEndpoint);
+		if(!EvdoMode)
+			usb_clear_halt(devh, MessageEndpoint);
 		usb_release_interface(devh, Interface);
 	free(command);
 	return ret;
@@ -750,7 +753,8 @@ int switchSendMessage ()
 			return 0;
 		}
 	}
-	usb_clear_halt(devh, MessageEndpoint);
+	if(!EvdoMode)
+		usb_clear_halt(devh, MessageEndpoint);
 	SHOW_PROGRESS("Using endpoint 0x%02x for message sending ...\n", MessageEndpoint);
 	if (show_progress)
 		fflush(stdout);
@@ -788,14 +792,16 @@ int switchSendMessage ()
 		}
 	}
 
-	SHOW_PROGRESS("Resetting response endpoint 0x%02x\n", ResponseEndpoint);
-	ret = usb_clear_halt(devh, ResponseEndpoint);
-	if (ret)
-		SHOW_PROGRESS(" Error resetting endpoint: %d\n", ret);
-	SHOW_PROGRESS("Resetting message endpoint 0x%02x\n", MessageEndpoint);
-	ret = usb_clear_halt(devh, MessageEndpoint);
-	if (ret)
-		SHOW_PROGRESS(" Error resetting endpoint: %d\n", ret);
+	if(!EvdoMode){
+		SHOW_PROGRESS("Resetting response endpoint 0x%02x\n", ResponseEndpoint);
+		ret = usb_clear_halt(devh, ResponseEndpoint);
+		if (ret)
+			SHOW_PROGRESS(" Error resetting endpoint: %d\n", ret);
+		SHOW_PROGRESS("Resetting message endpoint 0x%02x\n", MessageEndpoint);
+		ret = usb_clear_halt(devh, MessageEndpoint);
+		if (ret)
+			SHOW_PROGRESS(" Error resetting endpoint: %d\n", ret);
+		}
 	usleep(200000);
 	if (ReleaseDelay) {
 		SHOW_PROGRESS("Blocking the interface for %d ms before releasing ...\n", ReleaseDelay);
