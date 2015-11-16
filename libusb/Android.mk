@@ -1,25 +1,20 @@
-ifneq (foo,foo)
-
 LOCAL_PATH:= $(call my-dir)
+
 include $(CLEAR_VARS)
 
+LOCAL_SRC_FILES:= \
+ core.c \
+ descriptor.c \
+ io.c \
+ sync.c \
+ os/linux_usbfs.c
+
+LOCAL_C_INCLUDES += \
+ external/libusb/ \
+ external/libusb/libusb/ \
+ external/libusb/libusb/os
+
+LOCAL_CFLAGS := -D_SHARED_LIBRARY_
+LOCAL_MODULE_TAGS:= optional
 LOCAL_MODULE:= libusb
-LOCAL_SRC_FILES := os/linux_usbfs.c \
-	core.c \
-	descriptor.c \
-	io.c \
-	sync.c
-
-LOCAL_MODULE_TAGS := eng
-
-LOCAL_C_INCLUDES += os libc/kernel/common/linux
-
-LOCAL_SHARED_LIBRARIES += libc
-
-LOCAL_CFLAGS += -DOS_LINUX
-
-LOCAL_PRELINK_MODULE := false
-
 include $(BUILD_SHARED_LIBRARY)
-
-endif

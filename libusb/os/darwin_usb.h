@@ -22,7 +22,6 @@
 
 #include "libusbi.h"
 
-#include <IOKit/IOTypes.h>
 #include <IOKit/IOCFBundle.h>
 #include <IOKit/usb/IOUSBLib.h>
 #include <IOKit/IOCFPlugIn.h>
@@ -113,10 +112,6 @@
 
 #endif
 
-#if !defined(IO_OBJECT_NULL)
-#define IO_OBJECT_NULL ((io_object_t) 0)
-#endif
-
 typedef IOCFPlugInInterface *io_cf_plugin_ref_t;
 typedef IONotificationPortRef io_notification_port_t;
 
@@ -126,8 +121,7 @@ struct darwin_device_priv {
   UInt32                location;
   char                  sys_path[21];
   usb_device_t        **device;
-  int                   open_count;
-  UInt8                 first_config, active_config;
+  int                  open_count;
 };
 
 struct darwin_device_handle_priv {
