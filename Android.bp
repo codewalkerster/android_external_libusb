@@ -59,10 +59,6 @@ cc_library {
             local_include_dirs: [
                 "linux",
             ],
-
-            host_ldlibs: [
-                "-lrt",
-            ],
         },
 
         windows: {
