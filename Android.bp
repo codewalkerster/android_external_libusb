@@ -48,7 +48,7 @@ cc_library {
             ],
         },
 
-        linux: {
+        linux_glibc: {
             srcs: [
                 "libusb/os/linux_usbfs.c",
                 "libusb/os/poll_posix.c",
