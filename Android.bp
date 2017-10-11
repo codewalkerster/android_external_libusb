@@ -16,13 +16,6 @@ cc_library {
         "libusb/os",
     ],
 
-    cflags: [
-        "-Wall",
-        "-Werror",
-        "-Wno-error=sign-compare",
-        "-Wno-error=switch",
-    ],
-
     target: {
         android: {
             srcs: [
