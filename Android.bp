@@ -16,6 +16,12 @@ cc_library {
         "libusb/os",
     ],
 
+    cflags: [
+        "-Wall",
+        "-Wno-error=sign-compare",
+        "-Wno-error=switch",
+    ],
+
     target: {
         android: {
             srcs: [
@@ -28,6 +34,8 @@ cc_library {
             local_include_dirs: [
                 "android",
             ],
+
+            cflags: ["-Werror"],
         },
 
         darwin: {
@@ -46,6 +54,8 @@ cc_library {
                 "-framework IOKit",
                 "-lobjc"
             ],
+
+            // cflags: ["-Werror"], // still has warnings
         },
 
         linux_glibc: {
@@ -59,6 +69,8 @@ cc_library {
             local_include_dirs: [
                 "linux",
             ],
+
+            cflags: ["-Werror"],
         },
 
         windows: {
@@ -73,6 +85,8 @@ cc_library {
             local_include_dirs: [
                 "windows",
             ],
+
+            cflags: ["-Werror"],
 
             // Not working yet.
             enabled: false,
