@@ -57,7 +57,10 @@ cc_library {
                 "-lobjc"
             ],
 
-            // cflags: ["-Werror"], // still has warnings
+            cflags: [
+                "-Wno-unused-parameter",
+                "-Wno-deprecated-declarations"
+            ],
         },
 
         linux_glibc: {
