@@ -141,7 +141,7 @@
 /* #undef USE_UDEV */
 
 /* Use UsbDk Windows backend */
-#define USE_USBDK 1
+/* #undef USE_USBDK */
 
 /* Version number of package */
 #define VERSION "1.0.21-rc5"
